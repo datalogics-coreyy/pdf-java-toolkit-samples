@@ -16,6 +16,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.RandomAccessFile;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  *
@@ -30,6 +33,12 @@ public final class SaveLinearized {
      */
     private SaveLinearized() {}
 
+    private static void printTime(String label) {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Date date = new Date();
+        System.out.println(label + dateFormat.format(date));
+    }
+
     /**
      * Main program.
      *
@@ -37,7 +46,7 @@ public final class SaveLinearized {
      * @throws Exception a general exception was thrown
      */
     public static void main(final String... args) throws Exception {
-
+        printTime("Start: ");
         if (args.length ==2) {
             InputStream ins = new FileInputStream(new File(args[0]));
             ByteReader br = new InputStreamByteReader(ins);
@@ -49,5 +58,7 @@ public final class SaveLinearized {
             ByteWriter writer = new RandomAccessFileByteWriter(outputPdfFile);
             doc.saveAndClose(writer, saveOptions);
         }
+
+        printTime("End: ");
     }
 }
